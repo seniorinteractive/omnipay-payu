@@ -5,12 +5,8 @@ namespace Omnipay\PayU;
 use Omnipay\Common\AbstractGateway;
 
 /**
- * @method \Omnipay\Common\Message\ResponseInterface completeAuthorize(array $options = array())
- * @method \Omnipay\Common\Message\ResponseInterface completePurchase(array $options = array())
- * @method \Omnipay\Common\Message\ResponseInterface void(array $options = array())
- * @method \Omnipay\Common\Message\ResponseInterface createCard(array $options = array())
- * @method \Omnipay\Common\Message\ResponseInterface updateCard(array $options = array())
- * @method \Omnipay\Common\Message\ResponseInterface deleteCard(array $options = array())
+ * Class Gateway
+ * @package Omnipay\PayU
  */
 class Gateway extends AbstractGateway
 {

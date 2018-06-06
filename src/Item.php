@@ -36,7 +36,7 @@ class Item extends BaseItem
      * @param $value
      * @return $this
      */
-    public function setOrderPriceType($value)
+    public function setPriceType($value)
     {
         return $this->setParameter('priceType', $value);
     }
@@ -72,7 +72,9 @@ class Item extends BaseItem
         ];
 
         foreach ($requiredParameters as $key) {
-            if (!isset($this->getParameter($key))) {
+            $value = $this->getParameter($key);
+
+            if (!isset($value)) {
                 throw new InvalidRequestException("The Item $key parameter is required");
             }
         }

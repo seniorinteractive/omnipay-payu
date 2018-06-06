@@ -3,7 +3,7 @@
 namespace Omnipay\PayU\Message\Requests;
 
 use Omnipay\Common\Message\AbstractRequest;
-use Omnipay\Payu\Message\Responses\PurchaseResponse;
+use Omnipay\PayU\Message\Responses\PurchaseResponse;
 
 /**
  * Class PurchaseRequest
@@ -107,26 +107,36 @@ class PurchaseRequest extends AbstractRequest
             $data['ORDER_PCODE[' . $key . ']'] = $item->getCode();
             $data['ORDER_PINFO[' . $key . ']'] = $item->getDescription();
             $data['ORDER_PRICE[' . $key . ']'] = $item->getPrice();
+            $data['ORDER_QTY[' . $key . ']'] = $item->getQuantity();
             $data['ORDER_VAT[' . $key . ']'] = $item->getVat();
             $data['ORDER_PRICE_TYPE[' . $key . ']'] = $item->getPriceType();
-            $data['ORDER_QTY[' . $key . ']'] = $item->getQuantity();
         }
 
-        $card = $this->getCard();
-
-        $data['BILL_LNAME'] = $card->getBillingLastName();
-        $data['BILL_FNAME'] = $card->getBillingFirstName();
-        $data['BILL_EMAIL'] = $card->getEmail();
-        $data['BILL_PHONE'] = $card->getBillingPhone();
-        $data['BILL_COUNTRYCODE'] = $card->getBillingCountry();
+        if ($card = $this->getCard()) {
+            $data['BILL_LNAME'] = $card->getBillingLastName();
+            $data['BILL_FNAME'] = $card->getBillingFirstName();
+            $data['BILL_EMAIL'] = $card->getEmail();
+            $data['BILL_PHONE'] = $card->getBillingPhone();
+            $data['BILL_COUNTRYCODE'] = $card->getBillingCountry();
+        }
 
         if ($this->getTestMode()) {
+            $data['DEBUG'] = true;
             $data['TESTORDER'] = true;
         }
+
+        $data = $this->filterEmptyValues($data);
 
         $data['ORDER_HASH'] = $this->generateHash($data);
 
         return $data;
+    }
+
+    protected function filterEmptyValues(array $data)
+    {
+        return array_filter($data, function ($value) {
+            return !is_null($value);
+        });
     }
 
     /**
@@ -142,16 +152,49 @@ class PurchaseRequest extends AbstractRequest
      * @param array $data
      * @return string
      */
-    public function generateHash(array $data)
+    protected function generateHash(array $data)
     {
-        ksort($data);
+        return hash_hmac('md5', $this->hasher($data), $this->getSecretKey());
+    }
 
-        $hashString = '';
+    /**
+     * @param array $data
+     * @return string
+     */
+    protected function hasher(array $data)
+    {
+        $ignoredKeys = [
+            'AUTOMODE',
+            'BACK_REF',
+            'DEBUG',
+            'BILL_FNAME',
+            'BILL_LNAME',
+            'BILL_EMAIL',
+            'BILL_PHONE',
+            'BILL_ADDRESS',
+            'BILL_CITY',
+            'DELIVERY_FNAME',
+            'DELIVERY_LNAME',
+            'DELIVERY_PHONE',
+            'DELIVERY_ADDRESS',
+            'DELIVERY_CITY',
+            'LU_ENABLE_TOKEN',
+            'LU_TOKEN_TYPE',
+            'LANGUAGE',
+        ];
 
-        foreach ($data as $key => $value) {
-            $hashString .= strlen($value) . $value;
+        $hash = '';
+
+        foreach ($data as $dataKey => $dataValue) {
+            if (is_array($dataValue)) {
+                $hash .= $this->hasher($dataValue);
+            } else {
+                if (!in_array($dataKey, $ignoredKeys, true)) {
+                    $hash .= strlen($dataValue) . $dataValue;
+                }
+            }
         }
 
-        return hash_hmac('md5', $hashString, $this->getSecretKey());
+        return $hash;
     }
 }

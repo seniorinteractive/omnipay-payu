@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\Payu\Message\Responses;
+namespace Omnipay\PayU\Message\Responses;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RedirectResponseInterface;
@@ -35,6 +35,9 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
         return $this->request->endpoint;
     }
 
+    /**
+     * @return string
+     */
     public function getRedirectMethod()
     {
         return 'POST';
