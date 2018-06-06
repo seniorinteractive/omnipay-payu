@@ -1,0 +1,29 @@
+{
+    "name": "RomM1/omnipay-payu",
+    "type": "library",
+    "description": "PayU driver for the Omnipay payment processing library",
+    "keywords": [
+        "gateway",
+        "merchant",
+        "omnipay",
+        "pay",
+        "payment",
+        "payu",
+        "purchase"
+    ],
+    "homepage": "https://github.com/RomM1/omnipay-payu",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Roman Mukhamadeev",
+            "email": "mukhamadeevroman@ya.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Omnipay\\PayU\\" : "src/" }
+    },
+    "require": {
+        "omnipay/common": "~3.0",
+        "php-http/guzzle6-adapter": "*"
+    }
+}

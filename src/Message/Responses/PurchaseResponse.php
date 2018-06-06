@@ -1,0 +1,50 @@
+<?php
+
+namespace Omnipay\Payu\Message\Responses;
+
+use Omnipay\Common\Message\AbstractResponse;
+use Omnipay\Common\Message\RedirectResponseInterface;
+
+/**
+ * Class PurchaseResponse
+ * @package Omnipay\Payu\Message\Responses
+ */
+class PurchaseResponse extends AbstractResponse implements RedirectResponseInterface
+{
+    /**
+     * @return bool
+     */
+    public function isRedirect()
+    {
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSuccessful()
+    {
+        return false;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRedirectUrl()
+    {
+        return $this->request->endpoint;
+    }
+
+    public function getRedirectMethod()
+    {
+        return 'POST';
+    }
+
+    /**
+     * @return array|mixed
+     */
+    public function getRedirectData()
+    {
+        return $this->data;
+    }
+}
