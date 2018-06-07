@@ -1,6 +1,9 @@
 # Omnipay: PayU
 
-**PayU driver for the Omnipay payment processing library**
+**PayU Russia driver for the Omnipay payment processing library**
+
+[![Latest Stable Version](https://poser.pugx.org/romm1/omnipay-payu/version)](https://packagist.org/packages/romm1/omnipay-payu)
+[![Total Downloads](https://poser.pugx.org/romm1/omnipay-payu/d/total.png)](https://packagist.org/packages/romm1/omnipay-payu)
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
 processing library for PHP 5.6+. This package implements PayU support for Omnipay.
@@ -10,7 +13,6 @@ processing library for PHP 5.6+. This package implements PayU support for Omnipa
 ```
 $ composer require romm1/omnipay-payu
 ```
-
 
 ## Basic Usage
 
@@ -46,6 +48,7 @@ $ composer require romm1/omnipay-payu
                 ]),
             ]
         ])->send();
+    
     $purchase->redirect();
 ```
 
