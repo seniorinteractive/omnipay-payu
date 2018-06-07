@@ -1,5 +1,5 @@
 {
-    "name": "RomM1/omnipay-payu",
+    "name": "romm1/omnipay-payu",
     "type": "library",
     "description": "PayU driver for the Omnipay payment processing library",
     "keywords": [
