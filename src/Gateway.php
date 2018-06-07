@@ -24,28 +24,10 @@ class Gateway extends AbstractGateway
     public function getDefaultParameters()
     {
         return [
-            'merchantId' => '',
             'merchantName' => '',
             'secretKey' => '',
-            'testMode' => true,
+            'testMode' => false,
         ];
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMerchantId()
-    {
-        return $this->getParameter('merchantId');
-    }
-
-    /**
-     * @param $value
-     * @return $this
-     */
-    public function setMerchantId($value)
-    {
-        return $this->setParameter('merchantId', $value);
     }
 
     /**
@@ -89,5 +71,14 @@ class Gateway extends AbstractGateway
     public function purchase(array $parameters = [])
     {
         return $this->createRequest('\Omnipay\PayU\Message\Requests\PurchaseRequest', $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Common\Message\AbstractRequest|\Omnipay\Common\Message\RequestInterface
+     */
+    public function completePurchase(array $parameters = [])
+    {
+        return $this->createRequest('\Omnipay\PayU\Message\Requests\CompletePurchaseRequest', $parameters);
     }
 }

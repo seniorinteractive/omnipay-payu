@@ -7,7 +7,7 @@ use Omnipay\Common\Message\RedirectResponseInterface;
 
 /**
  * Class PurchaseResponse
- * @package Omnipay\Payu\Message\Responses
+ * @package Omnipay\PayU\Message\Responses
  */
 class PurchaseResponse extends AbstractResponse implements RedirectResponseInterface
 {

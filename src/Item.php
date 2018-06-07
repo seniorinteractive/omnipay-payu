@@ -2,11 +2,26 @@
 
 namespace Omnipay\PayU;
 
-use Omnipay\Common\Item as BaseItem;
+use Omnipay\Common\Item as OmnipayItem;
 use Omnipay\Common\Exception\InvalidRequestException;
 
-class Item extends BaseItem
+/**
+ * Class Item
+ * @package Omnipay\PayU
+ */
+class Item extends OmnipayItem
 {
+    /**
+     * @param $value
+     * @return OmnipayItem
+     */
+    public function setName($value)
+    {
+        $value = str_replace(['+', '"', '\'', '«', '»'], '', $value);
+
+        return parent::setName($value);
+    }
+
     /**
      * @return mixed
      */
