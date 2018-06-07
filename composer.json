@@ -1,7 +1,7 @@
 {
     "name": "romm1/omnipay-payu",
     "type": "library",
-    "description": "PayU driver for the Omnipay payment processing library",
+    "description": "PayU Russia driver for the Omnipay payment processing library",
     "keywords": [
         "gateway",
         "merchant",
@@ -9,6 +9,7 @@
         "pay",
         "payment",
         "payu",
+        "payu-russia",
         "purchase"
     ],
     "homepage": "https://github.com/RomM1/omnipay-payu",
