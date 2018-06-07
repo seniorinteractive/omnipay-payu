@@ -75,7 +75,7 @@ class PurchaseRequest extends AbstractRequest
         $this->validate('transactionReference', 'merchantName', 'orderDate', 'items');
 
         $data['MERCHANT'] = $this->getMerchantName();
-        $data['ORDER_REF'] = $this->getTransactionReference();
+        $data['ORDER_REF'] = $this->getTransactionId();
         $data['ORDER_DATE'] = $this->getOrderDate();
         $data['PAY_METHOD'] = $this->getPaymentMethod();
         $data['BACK_REF'] = $this->getReturnUrl();
