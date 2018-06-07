@@ -61,7 +61,7 @@ $ composer require romm1/omnipay-payu
     if ($purchase->isSuccessful()) {
         // Your logic
         
-        return $purchase->getReturn();
+        return $purchase->completeResponse();
     }
 ```
 
