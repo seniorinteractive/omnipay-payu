@@ -60,6 +60,7 @@ abstract class AbstractRequest extends OmnipayRequest
             'LU_ENABLE_TOKEN',
             'LU_TOKEN_TYPE',
             'LANGUAGE',
+            'HASH',
         ];
 
         $hash = '';

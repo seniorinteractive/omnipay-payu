@@ -72,7 +72,7 @@ class PurchaseRequest extends AbstractRequest
      */
     public function getData()
     {
-        $this->validate('transactionReference', 'merchantName', 'orderDate', 'items');
+        $this->validate('transactionId', 'merchantName', 'orderDate', 'items');
 
         $data['MERCHANT'] = $this->getMerchantName();
         $data['ORDER_REF'] = $this->getTransactionId();
@@ -103,11 +103,11 @@ class PurchaseRequest extends AbstractRequest
         }
 
         if ($this->getTestMode()) {
-            $data['DEBUG'] = true;
-            $data['TESTORDER'] = true;
+            $data['DEBUG'] = 'TRUE';
+            $data['TESTORDER'] = 'TRUE';
         }
 
-        $data = $this->filterEmptyValues($data);
+        $data = $this->filterNullValues($data);
 
         $data['ORDER_HASH'] = $this->generateHash($data);
 
@@ -118,7 +118,7 @@ class PurchaseRequest extends AbstractRequest
      * @param array $data
      * @return array
      */
-    protected function filterEmptyValues(array $data)
+    protected function filterNullValues(array $data)
     {
         return array_filter($data, function ($value) {
             return !is_null($value);
