@@ -25,15 +25,17 @@ class CompletePurchaseResponse extends AbstractResponse implements RedirectRespo
     protected function isSuccessfulStatus()
     {
         return isset($this->getData()['ORDERSTATUS'])
-            && $this->getData()['ORDERSTATUS'] === $this->getCompleteStatus();
+            && in_array($this->getData()['ORDERSTATUS'], $this->getCompleteStatus(), true);
     }
 
     /**
-     * @return string
+     * @return array
      */
     protected function getCompleteStatus()
     {
-        return $this->request->getTestMode() ? 'TEST' : 'COMPLETE';
+        return $this->request->getTestMode()
+            ? ['TEST']
+            : ['PAYMENT_AUTHORIZED', 'COMPLETE'];
     }
 
     /**
