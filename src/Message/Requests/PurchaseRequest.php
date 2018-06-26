@@ -77,10 +77,8 @@ class PurchaseRequest extends AbstractRequest
         $data['MERCHANT'] = $this->getMerchantName();
         $data['ORDER_REF'] = $this->getTransactionId();
         $data['ORDER_DATE'] = $this->getOrderDate();
-        $data['PAY_METHOD'] = $this->getPaymentMethod();
         $data['BACK_REF'] = $this->getReturnUrl();
         $data['ORDER_TIMEOUT'] = $this->getOrderTimeout();
-        $data['PRICES_CURRENCY'] = $this->getCurrency();
 
         foreach ($this->getItems() as $key => $item) {
             $item->validate();
@@ -91,6 +89,12 @@ class PurchaseRequest extends AbstractRequest
             $data['ORDER_PRICE[' . $key . ']'] = $item->getPrice();
             $data['ORDER_QTY[' . $key . ']'] = $item->getQuantity();
             $data['ORDER_VAT[' . $key . ']'] = $item->getVat();
+        }
+
+        $data['PRICES_CURRENCY'] = $this->getCurrency();
+        $data['PAY_METHOD'] = $this->getPaymentMethod();
+
+        foreach ($this->getItems() as $key => $item) {
             $data['ORDER_PRICE_TYPE[' . $key . ']'] = $item->getPriceType();
         }
 
