@@ -68,6 +68,40 @@ class PurchaseRequest extends AbstractRequest
 
     /**
      * @return mixed
+     */
+    public function getOrderShipping()
+    {
+        return $this->getParameter('orderShipping');
+    }
+
+    /**
+     * @param $value
+     * @return $this
+     */
+    public function setOrderShipping($value)
+    {
+        return $this->setParameter('orderShipping', $value);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDiscount()
+    {
+        return $this->getParameter('discount');
+    }
+
+    /**
+     * @param $value
+     * @return $this
+     */
+    public function setDiscount($value)
+    {
+        return $this->setParameter('discount', $value);
+    }
+
+    /**
+     * @return mixed
      * @throws \Omnipay\Common\Exception\InvalidRequestException
      */
     public function getData()
@@ -91,7 +125,9 @@ class PurchaseRequest extends AbstractRequest
             $data['ORDER_VAT[' . $key . ']'] = $item->getVat();
         }
 
+        $data['ORDER_SHIPPING'] = $this->getOrderShipping();
         $data['PRICES_CURRENCY'] = $this->getCurrency();
+        $data['DISCOUNT'] = $this->getDiscount();
         $data['PAY_METHOD'] = $this->getPaymentMethod();
 
         foreach ($this->getItems() as $key => $item) {
