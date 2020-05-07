@@ -52,6 +52,7 @@ abstract class AbstractRequest extends OmnipayRequest
             'BILL_PHONE',
             'BILL_ADDRESS',
             'BILL_CITY',
+            'BILL_COUNTRYCODE',
             'DELIVERY_FNAME',
             'DELIVERY_LNAME',
             'DELIVERY_PHONE',
@@ -65,6 +66,7 @@ abstract class AbstractRequest extends OmnipayRequest
 
         $hash = '';
         $dataSorted = $this->hashDataSorted($data);
+
         foreach ($dataSorted as $dataKey => $dataValue) {
             if (is_array($dataValue)) {
                 $hash .= $this->hasher($dataValue);
@@ -72,7 +74,6 @@ abstract class AbstractRequest extends OmnipayRequest
                 $hash .= strlen($dataValue) . $dataValue;
             }
         }
-
         return $hash;
     }
 
@@ -86,17 +87,17 @@ abstract class AbstractRequest extends OmnipayRequest
             'MERCHANT',
             'ORDER_REF',
             'ORDER_DATE',
-            'ORDER_PNAME',
-            'ORDER_PCODE',
-            'ORDER_PINFO',
-            'ORDER_PRICE',
-            'ORDER_QTY',
-            'ORDER_VAT',
+            'ORDER_PNAME\[',
+            'ORDER_PCODE\[',
+            'ORDER_PINFO\[',
+            'ORDER_PRICE\[',
+            'ORDER_QTY\[',
+            'ORDER_VAT\[',
             'ORDER_SHIPPING',
             'PRICES_CURRENCY',
             'DISCOUNT',
             'PAY_METHOD',
-            'ORDER_PRICE_TYPE',
+            'ORDER_PRICE_TYPE\[',
             'TESTORDER'
         ];
         $sortedData = [];
@@ -111,7 +112,6 @@ abstract class AbstractRequest extends OmnipayRequest
                 $sortedData = $sortedData + $likeKey;
             }
         }
-
         return $sortedData;
     }
 

@@ -32,7 +32,7 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
      */
     public function getRedirectUrl()
     {
-        return $this->request->endpoint;
+        return $this->request->getEndpoint();
     }
 
     /**

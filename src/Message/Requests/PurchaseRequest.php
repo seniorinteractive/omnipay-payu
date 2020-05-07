@@ -13,12 +13,12 @@ class PurchaseRequest extends AbstractRequest
     /**
      * @var string
      */
-    protected $liveEndpoint = 'https://secure.payu.ro/order/lu.php';
+    public $liveEndpoint = 'https://secure.payu.ro/order/lu.php';
 
     /**
      * @var string
      */
-    protected $testEndpoint = 'https://sandbox.payu.ro/order/lu.php';
+    public $testEndpoint = 'https://sandbox.payu.ro/order/lu.php';
 
     /**
      * @return mixed
@@ -112,7 +112,6 @@ class PurchaseRequest extends AbstractRequest
     public function getData()
     {
         $this->validate('transactionId', 'merchantName', 'orderDate', 'items');
-
         $data['MERCHANT'] = $this->getMerchantName();
         $data['ORDER_REF'] = $this->getTransactionId();
         $data['ORDER_DATE'] = $this->getOrderDate();
@@ -168,6 +167,14 @@ class PurchaseRequest extends AbstractRequest
         return array_filter($data, function ($value) {
             return !is_null($value);
         });
+    }
+
+    /**
+     * @return string
+     */
+    public function getEndpoint()
+    {
+        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
     }
 
     /**
