@@ -106,7 +106,7 @@ abstract class AbstractRequest extends OmnipayRequest
                 continue;
             }
 
-            $likeKey = preg_grep_keys("/$value/", $data);
+            $likeKey = $this->preg_grep_keys("/$value/", $data);
             if(!empty($likeKey)){
                 $sortedData = $sortedData + $likeKey;
             }

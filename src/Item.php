@@ -74,9 +74,10 @@ class Item extends OmnipayItem
     }
 
     /**
+     * @param mixed $args
      * @throws InvalidRequestException
      */
-    public function validate()
+    public function validate(...$args)
     {
         $requiredParameters = [
             'name',

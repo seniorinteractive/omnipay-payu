@@ -13,7 +13,12 @@ class PurchaseRequest extends AbstractRequest
     /**
      * @var string
      */
-    public $endpoint = 'https://secure.payu.ru/order/lu.php';
+    protected $liveEndpoint = 'https://secure.payu.ro/order/lu.php';
+
+    /**
+     * @var string
+     */
+    protected $testEndpoint = 'https://sandbox.payu.ro/order/lu.php';
 
     /**
      * @return mixed
@@ -115,7 +120,7 @@ class PurchaseRequest extends AbstractRequest
         $data['ORDER_TIMEOUT'] = $this->getOrderTimeout();
 
         foreach ($this->getItems() as $key => $item) {
-            $item->validate();
+            $item->validate(null);
 
             $data['ORDER_PNAME[' . $key . ']'] = $item->getName();
             $data['ORDER_PCODE[' . $key . ']'] = $item->getCode();
