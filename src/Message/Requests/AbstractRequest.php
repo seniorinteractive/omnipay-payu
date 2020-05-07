@@ -64,8 +64,8 @@ abstract class AbstractRequest extends OmnipayRequest
         ];
 
         $hash = '';
-
-        foreach ($data as $dataKey => $dataValue) {
+        $dataSorted = $this->hashDataSorted($data);
+        foreach ($dataSorted as $dataKey => $dataValue) {
             if (is_array($dataValue)) {
                 $hash .= $this->hasher($dataValue);
             } elseif (!in_array($dataKey, $ignoredKeys, true)) {
@@ -75,4 +75,55 @@ abstract class AbstractRequest extends OmnipayRequest
 
         return $hash;
     }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function hashDataSorted($data) {
+
+        $exactOrder = [
+            'MERCHANT',
+            'ORDER_REF',
+            'ORDER_DATE',
+            'ORDER_PNAME',
+            'ORDER_PCODE',
+            'ORDER_PINFO',
+            'ORDER_PRICE',
+            'ORDER_QTY',
+            'ORDER_VAT',
+            'ORDER_SHIPPING',
+            'PRICES_CURRENCY',
+            'DISCOUNT',
+            'PAY_METHOD',
+            'ORDER_PRICE_TYPE',
+            'TESTORDER'
+        ];
+        $sortedData = [];
+        foreach ($exactOrder as $value) {
+            if(isset($data[$value]) || array_key_exists($value, $data)) {
+                $sortedData[$value] = $data[$value];
+                continue;
+            }
+
+            $likeKey = preg_grep_keys("/$value/", $data);
+            if(!empty($likeKey)){
+                $sortedData = $sortedData + $likeKey;
+            }
+        }
+
+        return $sortedData;
+    }
+
+
+    /**
+     * @param string $pattern
+     * @param array $input
+     * @param int $flags
+     * @return array
+     */
+    function preg_grep_keys($pattern, $input, $flags = 0) {
+        return array_intersect_key($input, array_flip(preg_grep($pattern, array_keys($input), $flags)));
+    }
+
 }
