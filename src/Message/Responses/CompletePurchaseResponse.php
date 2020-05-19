@@ -44,7 +44,7 @@ class CompletePurchaseResponse extends AbstractResponse implements RedirectRespo
     protected function verifyHash()
     {
         return isset($this->getData()['HASH'])
-            && $this->getData()['HASH'] === $this->request->generateHash($this->getData());
+            && $this->getData()['HASH'] === $this->request->generateHashResponse($this->getData());
     }
 
     /**

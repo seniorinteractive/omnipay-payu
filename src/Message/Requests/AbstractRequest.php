@@ -40,6 +40,55 @@ abstract class AbstractRequest extends OmnipayRequest
      * @param array $data
      * @return string
      */
+    public function generateHashResponse(array $data)
+    {
+        return hash_hmac('md5', $this->hasherResponse($data), $this->getSecretKey());
+    }
+
+    /**
+     * @param array $data
+     * @return string
+     */
+    public function hasherResponse(array $data){
+        $ignoredKeys = [
+            'AUTOMODE',
+            'BACK_REF',
+            'DEBUG',
+            'BILL_FNAME',
+            'BILL_LNAME',
+            'BILL_EMAIL',
+            'BILL_PHONE',
+            'BILL_ADDRESS',
+            'BILL_CITY',
+            'BILL_COUNTRYCODE',
+            'DELIVERY_FNAME',
+            'DELIVERY_LNAME',
+            'DELIVERY_PHONE',
+            'DELIVERY_ADDRESS',
+            'DELIVERY_CITY',
+            'LU_ENABLE_TOKEN',
+            'LU_TOKEN_TYPE',
+            'LANGUAGE',
+            'HASH',
+        ];
+
+        $hash = '';
+
+        foreach ($data as $dataKey => $dataValue) {
+            if (is_array($dataValue)) {
+                $hash .= $this->hasher($dataValue);
+            } elseif (!in_array($dataKey, $ignoredKeys, true)) {
+                $hash .= strlen($dataValue) . $dataValue;
+            }
+        }
+
+        return $hash;
+    }
+
+    /**
+     * @param array $data
+     * @return string
+     */
     public function hasher(array $data)
     {
         $ignoredKeys = [
