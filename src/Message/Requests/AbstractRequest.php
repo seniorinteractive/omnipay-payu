@@ -76,7 +76,7 @@ abstract class AbstractRequest extends OmnipayRequest
 
         foreach ($data as $dataKey => $dataValue) {
             if (is_array($dataValue)) {
-                $hash .= $this->hasher($dataValue);
+                $hash .= $this->hasherResponse($dataValue);
             } elseif (!in_array($dataKey, $ignoredKeys, true)) {
                 $hash .= strlen($dataValue) . $dataValue;
             }
