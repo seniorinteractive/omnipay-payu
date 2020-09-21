@@ -77,7 +77,7 @@ class CompletePurchaseResponse extends AbstractResponse implements RedirectRespo
         $ipnDate = isset($this->getData()['IPN_DATE']) ? $this->getData()['IPN_DATE'] : null;
         $date = date('YmdHis');
 
-        $hash = $this->request->generateHash(compact('ipnPid', 'ipnName', 'ipnDate', 'date'));
+        $hash = $this->request->generateHashResponse(compact('ipnPid', 'ipnName', 'ipnDate', 'date'));
 
         return '<EPAYMENT>' . $date . '|' . $hash . '</EPAYMENT>';
     }
